@@ -21,7 +21,7 @@ namespace DiscordBot
             catch(Exception ex)
             {
                 await Log.LogPrint("The configuration file is missing!\n" + ex);
-                ProgramClose();
+                await ProgramClose();
             }
             try
             {
@@ -46,7 +46,7 @@ namespace DiscordBot
             catch (Exception ex)
             {
                 await Log.LogPrint("the configuration file is broken!\n" + ex);
-                ProgramClose();
+                await ProgramClose();
             }
 
 
