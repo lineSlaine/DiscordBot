@@ -1,34 +1,28 @@
-﻿using Discord;
-using Discord.WebSocket;
+﻿using DSharpPlus;
 using Microsoft.Extensions.Configuration;
 
 
 public sealed class BotLineEZ
 {
-    string _token;
-    DiscordSocketClient client;
-    IConfiguration configuration;
-    public BotLineEZ(IConfiguration appConfig)
+    public DiscordClient client;
+    public BotLineEZ(IConfiguration configuration)
     {
-        client = new DiscordSocketClient();
-        client.Log += Log.LogPrint;
-        configuration = appConfig;
-        _token = configuration["BotSettings:Token"];
+        var discordConfig = new DiscordConfiguration()
+        {
+            Intents = DiscordIntents.All,
+            Token = configuration["BotSettings:Token"],
+            TokenType = TokenType.Bot,
+            AutoReconnect = true
+        };
+        new DiscordClient(discordConfig);
+        client = new DiscordClient(discordConfig);
     }
     public async Task StartBot()
     {
-        await client.StartAsync();
+        await client.ConnectAsync();
     }
     public async Task StopBot()
     {
-        await client.StopAsync();
-    }
-    public async Task LoginBot()
-    {
-        await client.LoginAsync(TokenType.Bot, _token);
-    }
-    public async Task LogoutBot()
-    {
-        await client.LogoutAsync();
+        await client.DisconnectAsync();
     }
 }

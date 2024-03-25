@@ -1,16 +1,18 @@
-﻿using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Configuration.Json;
+﻿using DSharpPlus.CommandsNext;
+using Microsoft.Extensions.Configuration;
 
 namespace DiscordBot
 {
     internal class Program
     {
         static void Main(string[] args) => new Program().MainAsync().GetAwaiter().GetResult();
-        BotLineEZ bot;
-        IConfiguration configuration;
+        private BotLineEZ bot;
+        private IConfiguration configuration;
+        private static CommandsNextExtension commands;
         
         private async Task MainAsync()
         {
+
             try
             {
                 configuration = new ConfigurationBuilder()
@@ -18,29 +20,41 @@ namespace DiscordBot
             }
             catch(Exception ex)
             {
-                await Log.LogPrint("The configuration file is missing\n" + ex);
+                await Log.LogPrint("The configuration file is missing!\n" + ex);
                 ProgramClose();
             }
-
             try
             {
                 bot = new BotLineEZ(configuration);
-                await bot.LoginBot();
+
+
+
+                var commandConfig = new CommandsNextConfiguration()
+                {
+                    StringPrefixes = [configuration["BotSettings:Prefix"]],
+                    EnableMentionPrefix = true,
+                    EnableDms = true,
+                    EnableDefaultHelp = false
+                };
+                commands = bot.client.UseCommandsNext(commandConfig);
+                commands.RegisterCommands<TestCommand>();
+
+
+
                 await bot.StartBot();
             }
             catch (Exception ex)
             {
-                await Log.LogPrint("Token is Null\n" + ex);
+                await Log.LogPrint("the configuration file is broken!\n" + ex);
                 ProgramClose();
             }
-            
 
 
-            Console.ReadLine();
+            await Task.Delay(-1);
         }
-
-        void ProgramClose()
+        async Task ProgramClose()
         {
+            await bot.StopBot();
             Environment.Exit(0);
         }
 
