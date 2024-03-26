@@ -1,17 +1,17 @@
 ﻿using DSharpPlus.CommandsNext;
 using DSharpPlus.CommandsNext.Attributes;
-using DSharpPlus.CommandsNext.Converters;
 using DSharpPlus.Entities;
-using System.Drawing;
+using DSharpPlus.SlashCommands;
 
-internal class TestCommand : BaseCommandModule
+
+public sealed class TestCommand : BaseCommandModule
 {
-    [Command("Hello")]
-    public async Task HelloAsync(CommandContext commandContext)
-    {
-        
-        await commandContext.Channel.SendMessageAsync($"Hello, {commandContext.User.Username}");
-    }
+    //[Command("Hello")]
+    //public async Task HelloAsync(CommandContext commandContext)
+    //{
+
+    //    await commandContext.Channel.SendMessageAsync($"Hello, {commandContext.User.Username}");
+    //}
 
     [Command ("myguns")]
     public async Task MyGuns(CommandContext commandContext)
