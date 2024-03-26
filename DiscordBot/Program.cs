@@ -30,17 +30,18 @@ namespace DiscordBot
 
 
 
-                var commandConfig = new CommandsNextConfiguration()
-                {
-                    StringPrefixes = [configuration["BotSettings:Prefix"]],
-                    EnableMentionPrefix = true,
-                    EnableDms = true,
-                    EnableDefaultHelp = false
-                };
-                commands = bot.GetClient().UseCommandsNext(commandConfig);
-                commands.RegisterCommands<TestCommand>();
+                //var commandConfig = new CommandsNextConfiguration()
+                //{
+                //    StringPrefixes = [configuration["BotSettings:Prefix"]],
+                //    EnableMentionPrefix = true,
+                //    EnableDms = true,
+                //    EnableDefaultHelp = false
+                //};
+                //commands = bot.GetClient().UseCommandsNext(commandConfig);
+                //commands.RegisterCommands<TestCommand>();
                 var slashCommandsConfig = bot.GetClient().UseSlashCommands();
                 slashCommandsConfig.RegisterCommands<TestShashCommand>();
+                slashCommandsConfig.RegisterCommands<ValorantSlashCommand>();
 
 
                 await bot.StartBot();
