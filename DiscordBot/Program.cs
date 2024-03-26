@@ -1,4 +1,5 @@
 ﻿using DSharpPlus.CommandsNext;
+using DSharpPlus.SlashCommands;
 using Microsoft.Extensions.Configuration;
 
 namespace DiscordBot
@@ -36,9 +37,10 @@ namespace DiscordBot
                     EnableDms = true,
                     EnableDefaultHelp = false
                 };
-                commands = bot.client.UseCommandsNext(commandConfig);
+                commands = bot.GetClient().UseCommandsNext(commandConfig);
                 commands.RegisterCommands<TestCommand>();
-
+                var slashCommandsConfig = bot.GetClient().UseSlashCommands();
+                slashCommandsConfig.RegisterCommands<TestShashCommand>();
 
 
                 await bot.StartBot();

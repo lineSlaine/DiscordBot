@@ -4,7 +4,7 @@ using Microsoft.Extensions.Configuration;
 
 public sealed class BotLineEZ
 {
-    public DiscordClient client;
+    DiscordClient client;
     public BotLineEZ(IConfiguration configuration)
     {
         var discordConfig = new DiscordConfiguration()
@@ -24,5 +24,9 @@ public sealed class BotLineEZ
     public async Task StopBot()
     {
         await client.DisconnectAsync();
+    }
+    public DiscordClient GetClient()
+    {
+        return client;
     }
 }
