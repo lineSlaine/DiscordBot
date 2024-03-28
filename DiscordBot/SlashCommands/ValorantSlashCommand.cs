@@ -1,12 +1,11 @@
 ﻿using DSharpPlus;
-using DSharpPlus.CommandsNext;
 using DSharpPlus.Entities;
 using DSharpPlus.SlashCommands;
 
 internal class ValorantSlashCommand : ApplicationCommandModule
 {
     [SlashCommand("gettiersgun", "shows all weapon tiers")]
-    public async Task MyGuns(InteractionContext interactionContext)
+    public async Task GetTierGun(InteractionContext interactionContext)
     {
        var selectTier = new DiscordEmbedBuilder
         {
@@ -16,6 +15,7 @@ internal class ValorantSlashCommand : ApplicationCommandModule
         await interactionContext.CreateResponseAsync(
            InteractionResponseType.ChannelMessageWithSource,
            new DiscordInteractionResponseBuilder().AddEmbed(selectTier));
+        //await Log.LogPrint(interactionContext.User.Id.ToString());
         var deluxeTier = new DiscordEmbedBuilder
         {
             Title = "Deluxe",
@@ -31,7 +31,6 @@ internal class ValorantSlashCommand : ApplicationCommandModule
         var ultraTier = new DiscordEmbedBuilder
         {
             Title = "Ultra",
-
             Color = DiscordColor.Yellow,
         };
         await interactionContext.Channel.SendMessageAsync(embed: ultraTier);
